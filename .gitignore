@@ -1,0 +1,5 @@
+front/node_modules
+front/build
+front/dist/*
+!front/dist/img
+data

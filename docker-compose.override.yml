@@ -1,0 +1,13 @@
+version: "3"
+services:
+  front:
+    environment:
+      DEBUG: "true"
+      DEV_HOST: "${DEV_HOST}"
+    volumes:
+      - ./front:/front
+      - /front/node_modules
+    ports:
+      - 3000:3000
+      - 3001:3001
+    command: ["npm", "run", "dev"]
