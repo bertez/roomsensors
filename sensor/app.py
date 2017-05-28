@@ -83,7 +83,7 @@ def loop():
     # loopScreen()
     print(log)
 
-    sleep(60)
+    sleep(60 * 5)
 
 
 def destroy():

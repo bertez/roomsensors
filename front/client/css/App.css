@@ -1,0 +1,8 @@
+@import './base.css';
+
+.app {
+    h1 {
+        margin: 1rem;
+        text-decoration: underline;
+    }
+}

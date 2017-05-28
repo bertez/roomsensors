@@ -2,6 +2,7 @@ version: "3"
 services:
     sensor:
         build: ./sensor
+        image: bertez/roomtemp_sensor
         privileged: true
         environment:
             PYTHONUNBUFFERED: 0
@@ -12,8 +13,13 @@ services:
         volumes:
             - ./sensor:/sensor
             - /opt/vc:/opt/vc
+        depends_on:
+            - redis
     front:
         build: ./front
+        image: bertez/roomtemp_front
+        depends_on:
+            - redis
     redis:
         image: armhf/redis:3.0
         command: redis-server --appendonly yes

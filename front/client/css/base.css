@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,700');
+@import 'font-awesome/css/font-awesome.css';
+@import 'normalize.css/normalize.css';
+
+body {
+    font-family: 'Droid Sans', serif;
+}

@@ -1,4 +1,4 @@
-FROM armhf/node:7.8
+FROM hypriot/rpi-node:slim
 
 RUN ln -fs /usr/share/zoneinfo/Europe/Madrid /etc/localtime
 WORKDIR /front

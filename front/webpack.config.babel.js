@@ -2,7 +2,7 @@ import path from 'path';
 
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import { WDS_PORT, IS_PROD,SCRIPT_PATH } from './config';
+import { WDS_PORT, IS_PROD, SCRIPT_PATH } from './config';
 
 const plugins = [];
 let cssConfig = [
@@ -15,7 +15,8 @@ let cssConfig = [
     {
         loader: 'css-loader',
         options: {
-            sourceMap: true
+            sourceMap: true,
+            importLoaders: 1
         }
     },
     {
@@ -23,29 +24,34 @@ let cssConfig = [
         options: {
             sourceMap: true
         }
-    },
-    {
-        loader: 'sass-loader',
-        options: {
-            sourceMap: true
-        }
     }
 ];
 
 if (IS_PROD) {
-    const extractSass = new ExtractTextPlugin('./css/style.css');
+    const extractCss = new ExtractTextPlugin('./css/style.css');
 
-    plugins.push(extractSass);
+    plugins.push(
+        extractCss,
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(
+                process.env.NODE_ENV || 'production'
+            )
+        })
+    );
 
-    cssConfig = extractSass.extract({
+    cssConfig = extractCss.extract({
         use: [
-            { loader: 'css-loader' },
-            { loader: 'postcss-loader' },
-            { loader: 'sass-loader' }
+            {
+                loader: 'css-loader',
+                options: {
+                    importLoaders: 1
+                }
+            },
+            { loader: 'postcss-loader' }
         ]
     });
 } else {
-    plugins.push(new webpack.HotModuleReplacementPlugin());
+    plugins.push(new webpack.HotModuleReplacementPlugin(), new webpack.NamedModulesPlugin());
 }
 
 module.exports = {
@@ -71,7 +77,8 @@ module.exports = {
                                 targets: {
                                     browsers: ['last 2 versions']
                                 },
-                                modules: false
+                                modules: false,
+                                loose: true
                             }
                         ],
                         'react'
@@ -79,7 +86,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.scss$/,
+                test: /\.css$/,
                 use: cssConfig
             },
             {
@@ -92,7 +99,7 @@ module.exports = {
                     loader: 'file-loader',
                     query: {
                         outputPath: 'fonts/',
-                        publicPath: IS_PROD ? '/dist/': SCRIPT_PATH + '/'
+                        publicPath: IS_PROD ? '/dist/' : SCRIPT_PATH
                     }
                 }
             }
@@ -105,7 +112,8 @@ module.exports = {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
         port: WDS_PORT,
-        hot: true
+        hot: true,
+        headers: { 'Access-Control-Allow-Origin': '*' }
     },
     plugins
 };
