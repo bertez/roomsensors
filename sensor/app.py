@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-import os
-import numpy as np
 import signal
 import sys
 import datetime
+import os
 from time import sleep
+import numpy as np
 from sense_hat import SenseHat
 from redis import Redis, RedisError
 
@@ -21,8 +21,8 @@ redis = Redis(host='redis', db=0, socket_connect_timeout=2, socket_timeout=2)
 
 def get_cpu_temp():
     res = os.popen("/opt/vc/bin/vcgencmd measure_temp").readline()
-    t = float(res.replace("temp=", "").replace("'C\n", ""))
-    return t
+    temp = float(res.replace("temp=", "").replace("'C\n", ""))
+    return temp
 
 
 def smooth(temp):
@@ -56,7 +56,6 @@ def loopScreen():
         sense.show_message('{0}C'.format(round(t, max_dec)), text_colour=cT)
         sense.show_message('{0}%rH'.format(round(h, max_dec)), text_colour=cH)
         sense.show_message('{0}mbar'.format(round(p, max_dec)), text_colour=cP)
-
 
 def loop():
     global t, h, p

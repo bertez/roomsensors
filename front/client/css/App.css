@@ -1,8 +1,74 @@
 @import './base.css';
 
+$temperature: red;
+$humidity: steelblue;
+$pressure: green;
+
 .app {
-    h1 {
-        margin: 1rem;
-        text-decoration: underline;
+    > header {
+        h1 {
+            margin: 1rem;
+            text-decoration: underline;
+        }
+
+        .last {
+            display:flex;
+            justify-content: space-between;
+
+            .value {
+                font-size: 5rem;
+                margin: 1rem;
+                font-weight: bold;
+
+                span {
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+
+    article.chart {
+
+        button.active {
+            border: 2px solid black;
+        }
+
+        svg {
+            color: black;
+
+            .line {
+                  fill: none;
+                  stroke-width: 1.5px;
+
+                  &.temperature {
+                      stroke: $temperature;
+                  }
+
+                  &.humidity {
+                      stroke: $humidity;
+                  }
+
+                  &.pressure {
+                      stroke: $pressure;
+                  }
+            }
+
+            .dot {
+                stroke: white;
+                stroke-width: 1.5px;
+
+                &.temperature {
+                    fill: $temperature;
+                }
+
+                &.humidity {
+                    fill: $humidity;
+                }
+
+                &.pressure {
+                    fill: $pressure;
+                }
+            }
+        }
     }
 }

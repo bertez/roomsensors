@@ -21,6 +21,7 @@
     "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.5.0",
     "babel-preset-react": "^6.24.1",
+    "classnames": "^2.2.5",
     "concurrently": "^3.4.0",
     "css-loader": "^0.28.1",
     "d3": "^4.9.1",
